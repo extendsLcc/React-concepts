@@ -3,12 +3,12 @@ import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa'
 
 import api from '../../services/api';
 
-import { Container, Form, SubmitButton } from "./styles";
+import { Container, Form, SubmitButton, List } from "./styles";
 
 function Main() {
 
     const [newRepo, setNewRepo] = useState('');
-    const [respositories, setRepositories] = useState([]);
+    const [repositories, setRepositories] = useState([]);
     const [loading, setLoading] = useState(false);
 
     function handleInputChange(e) {
@@ -18,7 +18,7 @@ function Main() {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        setLoading( true );
+        setLoading(true);
         const response = await api.get(`/repos/${newRepo}`)
 
         console.log(response.data);
@@ -27,8 +27,8 @@ function Main() {
             name: response.data.full_name,
         };
 
-        setRepositories([...respositories, data]);
-        setLoading( false );
+        setRepositories([...repositories, data]);
+        setLoading(false);
 
     }
 
@@ -52,6 +52,14 @@ function Main() {
                     )}
                 </SubmitButton>
             </Form>
+            <List>
+                {repositories.map(repositorie => (
+                    <li key={repositorie.name}>
+                        <span>{repositorie.name}</span>
+                        <a href="">Detalhes</a>
+                    </li>
+                ))}
+            </List>
         </Container>
     );
 

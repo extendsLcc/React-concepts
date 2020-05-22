@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 
 import api from '../../services/api';
 
-import { Container, Form, SubmitButton, List } from "./styles";
+import Container from "../../componentes/Cotainer";
+import { Form, SubmitButton, List } from "./styles";
 
 function Main() {
 
@@ -13,12 +14,12 @@ function Main() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        console.log( 'loading repositories' )
+        console.log('loading repositories')
         loadRepositories();
     }, []);
 
     useEffect(() => {
-        console.log( 'repository change' )
+        console.log('repository change')
         localStorage.setItem('respositories', JSON.stringify(repositories));
     }, [repositories]);
 

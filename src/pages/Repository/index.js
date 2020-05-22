@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import api from "../../services/api";
+
+import Container from "../../componentes/Cotainer";
+import { Loading, Owner } from "./styles";
 
 function Repository({match}) {
 
@@ -25,11 +29,11 @@ function Repository({match}) {
                 })
             ]);
 
-            console.log(repositoryData);
-            console.log(issuesData);
+            console.log(repositoryData.data);
+            console.log(issuesData.data);
 
-            setRepository(repositoryData);
-            setIssues(issuesData);
+            setRepository(repositoryData.data);
+            setIssues(issuesData.data);
             setLoading(false);
 
         }
@@ -38,7 +42,20 @@ function Repository({match}) {
 
     }, [])
 
-    return (<h1>Respository: {decodeURIComponent(match.params.repository)}</h1>);
+    if(loading) {
+        return <Loading>Carregando</Loading>
+    }
+
+    return (
+        <Container>
+            <Owner>
+                <Link to='/'> Voltar aos repositórios
+                    <img src={repository.owner.avatar_url} alt={repository.owner.login}/>
+                    <h1>{repository.name}</h1>
+                    <h1>{repository.description}</h1>
+                </Link>
+            </Owner>
+        </Container>);
 
 }
 
